@@ -1,0 +1,16 @@
+{
+    "manifest_version": 3,
+    "name": "Literate Octo Winner",
+    "version": "1.0.0",
+    "description": "Literate Octo Winner desc",
+    "content_scripts": [
+        {
+            "js": [
+                "main.js"
+            ],
+            "matches": [
+                "https://*/*"
+            ]
+        }
+    ]
+}
