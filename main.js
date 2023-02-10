@@ -1,8 +1,20 @@
 console.log("this is a test");
+// import { thisTest } from ".index.js";
 
 invertPageColors();
 
+function onTriggerRender(input) {
+    console.log(input);
+}
+
 function invertPageColors() {
+    if (localStorage.getItem('test') === null) {
+        console.log('nothing in local storage, adding test key');
+        localStorage.setItem('test', 30);
+    } else {
+        console.log(localStorage.getItem('test'));
+    }
+
     const body = document.querySelector("body");
     const children = body.getElementsByTagName("*");
 
@@ -70,4 +82,53 @@ function invertColor(colorStr) {
 
         return alpha ? `rgba(${red}, ${green}, ${blue}, ${alpha})` : `rgb(${red}, ${green}, ${blue})`;
     }
+}
+
+
+
+// document.addEventListener('DOMContentLoaded', () => {
+//     // a variable for each color picker
+//     // add an eventlistener to each color variable (event : change)
+//     const bgInputElement = document.querySelector('#dhhfghgjghjgfjgfjghjgerewatrey657645');
+//     const txtInputElement = document.querySelector('#kfjukyuuserttbwerttr5676897698679n');
+//     const linkInputElement = document.querySelector('#liyhtrdh676457658ehghfg67eqam5334nk');
+  
+//     bgInputElement.addEventListener('input', onColorChange);
+//     txtInputElement.addEventListener('input', onColorChange);
+//     linkInputElement.addEventListener('input', onColorChange);
+// });
+
+// {
+// background : 'hex'
+// text:
+// link:
+// inverseColor: boolean
+// }
+
+async function triggerRender(input) {
+    let [tab] = await chrome.tabs.query({active: true, currentWindow: true});
+    chrome.scripting.executeScript({
+        target: {tabId: tab.id},
+        func: renderTheme,
+        args: [input]
+    });
+}
+
+function onColorChange(event) {
+    console.log('onColorChange invoked');
+    // Grab all color values
+    const background = document.querySelector('#dhhfghgjghjgfjgfjghjgerewatrey657645d').value;
+    const text = document.querySelector('#kfjukyuuserttbwerttr5676897698679n').value;
+    const link = document.querySelector('#liyhtrdh676457658ehghfg67eqam5334nk').value;
+    // Build input obj and set new color value accordingly
+    triggerRender({'background' : background, 'text' : text, 'link' : link});
+}
+
+// create a new function(obj)
+// grab every element from chrome window
+// look if its a link change color of link color
+// if not link change color property to text color
+// background change to new value
+function renderTheme(inputObj) {
+    console.log('rendertheme');
 }
